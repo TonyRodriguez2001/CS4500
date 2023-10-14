@@ -1,0 +1,8 @@
+obj-m += print_other.o
+all: set_pid
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules 
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+
+set_pid:
+	echo $$(ps -e | awk 'NR>1 {print $$1}' | shuf -n 1) > random_pid.txt
